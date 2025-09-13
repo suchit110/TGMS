@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student-Teacher Portal</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Student-Teacher Portal</h1>
+            <nav id="nav-menu" class="hidden">
+                <button id="logout-btn" class="btn btn-secondary">Logout</button>
+            </nav>
+        </header>
+
+        <main>
+            <!-- Authentication Section -->
+            <div id="auth-section">
+                <div class="auth-container">
+                    <div class="auth-tabs">
+                        <button class="tab-btn active" data-tab="login">Login</button>
+                        <button class="tab-btn" data-tab="signup">Sign Up</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div id="login-form" class="auth-form active">
+                        <h2>Login</h2>
+                        <form id="loginForm">
+                            <div class="form-group">
+                                <label for="login-username">Username:</label>
+                                <input type="text" id="login-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password:</label>
+                                <input type="password" id="login-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-role">Role:</label>
+                                <select id="login-role" required>
+                                    <option value="">Select Role</option>
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                    <option value="admin">Admin</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                        </form>
+                    </div>
+
+                    <!-- Signup Form -->
+                    <div id="signup-form" class="auth-form">
+                        <h2>Sign Up</h2>
+                        <form id="signupForm">
+                            <div class="form-group">
+                                <label for="signup-username">Username:</label>
+                                <input type="text" id="signup-username" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-password">Password:</label>
+                                <input type="password" id="signup-password" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="signup-role">Role:</label>
+                                <select id="signup-role" required>
+                                    <option value="">Select Role</option>
+                                    <option value="student">Student</option>
+                                    <option value="teacher">Teacher</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Sign Up</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Student Dashboard -->
+            <div id="student-dashboard" class="dashboard hidden">
+                <h2>Student Dashboard</h2>
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" data-tab="student-overview">Overview</button>
+                    <button class="tab-btn" data-tab="student-grades">Grades</button>
+                    <button class="tab-btn" data-tab="student-attendance">Attendance</button>
+                    <button class="tab-btn" data-tab="student-messages">Messages</button>
+                    <button class="tab-btn" data-tab="student-calendar">Calendar</button>
+                </div>
+                
+                <div class="tab-content active" id="student-overview">
+                    <div class="dashboard-content">
+                        <div class="profile-section">
+                            <h3>Profile</h3>
+                            <div id="student-profile">
+                                <p>Loading profile...</p>
+                            </div>
+                            <button id="edit-profile-btn" class="btn btn-secondary">Edit Profile</button>
+                        </div>
+                        <div class="progress-section">
+                            <h3>Progress Reports</h3>
+                            <div id="progress-reports">
+                                <p>Loading progress reports...</p>
+                            </div>
+                        </div>
+                        <div class="notices-section">
+                            <h3>Notices</h3>
+                            <div id="student-notices">
+                                <p>Loading notices...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="student-grades">
+                    <div class="grades-section">
+                        <h3>Grade History</h3>
+                        <div class="grade-filters">
+                            <select id="grade-subject-filter">
+                                <option value="">All Subjects</option>
+                                <option value="math">Math</option>
+                                <option value="science">Science</option>
+                                <option value="english">English</option>
+                            </select>
+                        </div>
+                        <div id="grades-list">
+                            <p>Loading grades...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="student-attendance">
+                    <div class="attendance-section">
+                        <h3>Attendance Record</h3>
+                        <div id="attendance-stats">
+                            <p>Loading attendance...</p>
+                        </div>
+                        <div id="attendance-calendar">
+                            <p>Loading calendar...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="student-messages">
+                    <div class="messages-section">
+                        <h3>Messages</h3>
+                        <div class="message-actions">
+                            <button class="btn btn-primary" onclick="app.openComposeMessage()">Compose Message</button>
+                        </div>
+                        <div id="messages-list">
+                            <p>Loading messages...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="student-calendar">
+                    <div class="calendar-section">
+                        <h3>Calendar</h3>
+                        <div id="calendar-view">
+                            <p>Loading calendar...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Teacher Dashboard -->
+            <div id="teacher-dashboard" class="dashboard hidden">
+                <h2>Teacher Dashboard</h2>
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" data-tab="teacher-overview">Overview</button>
+                    <button class="tab-btn" data-tab="teacher-students">Students</button>
+                    <button class="tab-btn" data-tab="teacher-grades">Grade Management</button>
+                    <button class="tab-btn" data-tab="teacher-attendance">Attendance</button>
+                    <button class="tab-btn" data-tab="teacher-messages">Messages</button>
+                    <button class="tab-btn" data-tab="teacher-calendar">Calendar</button>
+                    <button class="tab-btn" data-tab="teacher-analytics">Analytics</button>
+                </div>
+                
+                <div class="tab-content active" id="teacher-overview">
+                    <div class="dashboard-content">
+                        <div class="profile-section">
+                            <h3>Teacher Profile</h3>
+                            <div id="teacher-profile">
+                                <p>Loading profile...</p>
+                            </div>
+                            <button id="edit-teacher-profile-btn" class="btn btn-secondary">Edit Profile</button>
+                        </div>
+                        <div class="notices-section">
+                            <h3>Post Notice</h3>
+                            <form id="notice-form">
+                                <div class="form-group">
+                                    <label for="notice-title">Title:</label>
+                                    <input type="text" id="notice-title" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="notice-content">Content:</label>
+                                    <textarea id="notice-content" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Post Notice</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="teacher-students">
+                    <div class="students-section">
+                        <h3>My Students</h3>
+                        <div class="search-bar">
+                            <input type="text" id="student-search" placeholder="Search students...">
+                        </div>
+                        <div id="students-list">
+                            <p>Loading students...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="teacher-grades">
+                    <div class="grades-section">
+                        <h3>Grade Management</h3>
+                        <div class="grade-actions">
+                            <button class="btn btn-primary" onclick="app.openBulkGradeEntry()">Bulk Grade Entry</button>
+                            <button class="btn btn-secondary" onclick="app.openGradeAnalytics()">Grade Analytics</button>
+                        </div>
+                        <div id="grade-management">
+                            <p>Select a student to manage grades...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="teacher-attendance">
+                    <div class="attendance-section">
+                        <h3>Attendance Management</h3>
+                        <div class="attendance-actions">
+                            <button class="btn btn-primary" onclick="app.openAttendanceEntry()">Mark Attendance</button>
+                            <button class="btn btn-secondary" onclick="app.viewAttendanceReports()">Attendance Reports</button>
+                        </div>
+                        <div id="attendance-management">
+                            <p>Loading attendance management...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="teacher-messages">
+                    <div class="messages-section">
+                        <h3>Messages</h3>
+                        <div class="message-actions">
+                            <button class="btn btn-primary" onclick="app.openComposeMessage()">Compose Message</button>
+                            <input type="text" id="message-search" placeholder="Search messages...">
+                        </div>
+                        <div id="teacher-messages-list">
+                            <p>Loading messages...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="teacher-calendar">
+                    <div class="calendar-section">
+                        <h3>Calendar</h3>
+                        <div class="calendar-actions">
+                            <button class="btn btn-primary" onclick="app.createEvent()">Create Event</button>
+                        </div>
+                        <div id="teacher-calendar-view">
+                            <p>Loading calendar...</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="teacher-analytics">
+                    <div class="analytics-section">
+                        <h3>Analytics Dashboard</h3>
+                        <div id="analytics-charts">
+                            <p>Loading analytics...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard -->
+            <div id="admin-dashboard" class="dashboard hidden">
+                <h2>Admin Dashboard</h2>
+                <div class="dashboard-tabs">
+                    <button class="tab-btn active" data-tab="admin-overview">Overview</button>
+                    <button class="tab-btn" data-tab="admin-users">User Management</button>
+                    <button class="tab-btn" data-tab="admin-analytics">Analytics</button>
+                    <button class="tab-btn" data-tab="admin-settings">Settings</button>
+                    <button class="tab-btn" data-tab="admin-messages">Messages</button>
+                </div>
+                
+                <div class="tab-content active" id="admin-overview">
+                    <div class="dashboard-content">
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <h3>Total Students</h3>
+                                <div class="stat-number" id="total-students">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Total Teachers</h3>
+                                <div class="stat-number" id="total-teachers">0</div>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Average Attendance</h3>
+                                <div class="stat-number" id="avg-attendance">0%</div>
+                            </div>
+                            <div class="stat-card">
+                                <h3>Unread Messages</h3>
+                                <div class="stat-number" id="unread-messages">0</div>
+                            </div>
+                        </div>
+                        <div class="recent-activity">
+                            <h3>Recent Activity</h3>
+                            <div id="recent-activity-list">
+                                <p>Loading recent activity...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="admin-users">
+                    <div class="users-section">
+                        <h3>User Management</h3>
+                        <div class="user-actions">
+                            <input type="text" id="user-search" placeholder="Search users...">
+                            <select id="user-role-filter">
+                                <option value="">All Roles</option>
+                                <option value="student">Students</option>
+                                <option value="teacher">Teachers</option>
+                                <option value="admin">Admins</option>
+                            </select>
+                        </div>
+                        <div class="tabs">
+                            <button class="tab-btn active" data-tab="all-students">Students</button>
+                            <button class="tab-btn" data-tab="all-teachers">Teachers</button>
+                        </div>
+                        <div id="all-students" class="tab-content active">
+                            <div id="students-list-admin">
+                                <p>Loading students...</p>
+                            </div>
+                        </div>
+                        <div id="all-teachers" class="tab-content">
+                            <div id="teachers-list-admin">
+                                <p>Loading teachers...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="admin-analytics">
+                    <div class="analytics-section">
+                        <h3>System Analytics</h3>
+                        <div class="analytics-grid">
+                            <div class="chart-container">
+                                <h4>Grade Distribution</h4>
+                                <div id="grade-distribution-chart">
+                                    <p>Loading chart...</p>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h4>Attendance Trends</h4>
+                                <div id="attendance-trends-chart">
+                                    <p>Loading chart...</p>
+                                </div>
+                            </div>
+                            <div class="chart-container">
+                                <h4>Top Performing Students</h4>
+                                <div id="top-students-list">
+                                    <p>Loading data...</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="admin-settings">
+                    <div class="settings-section">
+                        <h3>System Settings</h3>
+                        <form id="settings-form">
+                            <div class="form-group">
+                                <label for="school-name">School Name:</label>
+                                <input type="text" id="school-name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="academic-year">Academic Year:</label>
+                                <input type="number" id="academic-year" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="grading-scale">Grading Scale:</label>
+                                <select id="grading-scale" required>
+                                    <option value="A-F">A-F</option>
+                                    <option value="1-100">1-100</option>
+                                    <option value="1-10">1-10</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="max-students">Max Students per Teacher:</label>
+                                <input type="number" id="max-students" min="1" max="50" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Save Settings</button>
+                        </form>
+                    </div>
+                </div>
+                
+                <div class="tab-content" id="admin-messages">
+                    <div class="messages-section">
+                        <h3>System Messages</h3>
+                        <div class="message-actions">
+                            <button class="btn btn-primary" onclick="app.sendSystemMessage()">Send System Message</button>
+                            <input type="text" id="admin-message-search" placeholder="Search messages...">
+                        </div>
+                        <div id="admin-messages-list">
+                            <p>Loading messages...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Modals -->
+        <div id="modal-overlay" class="modal-overlay hidden">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 id="modal-title">Modal Title</h3>
+                    <button id="close-modal" class="close-btn">&times;</button>
+                </div>
+                <div class="modal-body" id="modal-body">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
